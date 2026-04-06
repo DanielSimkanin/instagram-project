@@ -11,6 +11,10 @@
     :root, html, body {
       margin: 0;
       padding: 0;
+      background: #fafafa;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #121212; }
     }
   </style>
 </head>
@@ -20,12 +24,12 @@
   <script type="importmap">
     {
       "imports": {
-        "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.2/index.js",
-        "lit/": "https://cdn.jsdelivr.net/npm/lit@3.3.2/",
-        "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/reactive-element.js",
-        "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-        "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.3.2/lit-html.js",
-        "lit-html/": "https://cdn.jsdelivr.net/npm/lit-html@3.3.2/"
+        "lit": "https://esm.run/lit@3.3.2",
+        "lit/": "https://esm.run/lit@3.3.2/",
+        "lit-html": "https://esm.run/lit-html@3.3.2",
+        "lit-html/": "https://esm.run/lit-html@3.3.2/",
+        "@lit/reactive-element": "https://esm.run/@lit/reactive-element@2.0.4",
+        "@lit/reactive-element/": "https://esm.run/@lit/reactive-element@2.0.4/"
       }
     }
   </script>
