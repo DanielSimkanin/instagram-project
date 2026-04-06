@@ -3,9 +3,8 @@
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
-import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
-export class InstagramProject extends DDDSuper(LitElement) {
+export class InstagramProject extends LitElement {
   static get tag() {
     return "instagram-project";
   }
@@ -20,7 +19,6 @@ export class InstagramProject extends DDDSuper(LitElement) {
 
   static get properties() {
     return {
-      ...super.properties,
       photos: { type: Array },
       activeIndex: { type: Number },
       loading: { type: Boolean },
@@ -30,15 +28,11 @@ export class InstagramProject extends DDDSuper(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    // Load likes from localStorage
     const saved = localStorage.getItem("instagram-likes");
     if (saved) this.likes = JSON.parse(saved);
-
-    // Load activeIndex from URL
     const params = new URLSearchParams(window.location.search);
     const idx = parseInt(params.get("activeIndex"));
     if (!isNaN(idx)) this.activeIndex = idx;
-
     this.fetchPhotos();
   }
 
@@ -95,238 +89,238 @@ export class InstagramProject extends DDDSuper(LitElement) {
   }
 
   static get styles() {
-    return [
-      super.styles,
-      css`
-        :host {
-          display: block;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-          background: var(--ddd-theme-accent, #fafafa);
-          min-height: 100vh;
-        }
+    return css`
+      :host {
+        display: block;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        min-height: 100vh;
+        background: #fafafa;
+      }
 
-        .gallery-header {
-          text-align: center;
-          padding: 20px;
-          font-size: 22px;
-          font-weight: 700;
-          letter-spacing: 1px;
-          border-bottom: 1px solid #dbdbdb;
-          color: var(--ddd-theme-primary, #000);
-        }
+      .gallery-header {
+        text-align: center;
+        padding: 20px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #dbdbdb;
+        color: #000;
+        background: #fff;
+      }
 
+      .card {
+        background: #fff;
+        color: #000;
+        border: 1px solid #dbdbdb;
+        border-radius: 12px;
+        max-width: 480px;
+        margin: 24px auto;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #e1306c;
+      }
+
+      .author-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .username {
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .channel {
+        font-size: 12px;
+        color: #8e8e8e;
+      }
+
+      .user-since {
+        font-size: 11px;
+        color: #aaa;
+      }
+
+      .card-image-wrapper {
+        width: 100%;
+        aspect-ratio: 1;
+        overflow: hidden;
+        background: #f0f0f0;
+      }
+
+      .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .card-actions {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        gap: 16px;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 26px;
+        padding: 0;
+        transition: transform 0.15s;
+        line-height: 1;
+      }
+
+      .action-btn:hover {
+        transform: scale(1.2);
+      }
+
+      .heart {
+        color: #000;
+      }
+
+      .heart.liked {
+        color: #ed4956;
+      }
+
+      .card-footer {
+        padding: 0 16px 16px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .photo-title {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .photo-description {
+        color: #555;
+        font-size: 13px;
+      }
+
+      .photo-date {
+        font-size: 11px;
+        color: #aaa;
+        margin-top: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 16px;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      .nav-btn {
+        background: #0095f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .nav-btn:hover {
+        background: #007acc;
+      }
+
+      .nav-btn:disabled {
+        background: #b2dffc;
+        cursor: not-allowed;
+      }
+
+      .slide-counter {
+        font-size: 14px;
+        font-weight: 600;
+        color: #8e8e8e;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 0 0;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #dbdbdb;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: none;
+        padding: 0;
+      }
+
+      .dot.active {
+        background: #0095f6;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 60px;
+        font-size: 16px;
+        color: #999;
+      }
+
+      @media (max-width: 520px) {
         .card {
-          background: var(--ddd-theme-accent, #fff);
-          color: var(--ddd-theme-primary, #000);
-          border: 1px solid #dbdbdb;
-          border-radius: 12px;
-          max-width: 480px;
-          margin: 24px auto;
-          overflow: hidden;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+          max-width: 100%;
+          border-radius: 0;
+          border-left: none;
+          border-right: none;
         }
+      }
 
-        .card-header {
-          display: flex;
-          align-items: center;
-          padding: 12px 16px;
-          gap: 12px;
+      @media (prefers-color-scheme: dark) {
+        :host {
+          background: #121212;
         }
-
-        .avatar {
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 2px solid #e1306c;
+        .gallery-header {
+          background: #1c1c1c;
+          color: #fafafa;
+          border-color: #333;
         }
-
-        .author-info {
-          display: flex;
-          flex-direction: column;
+        .card {
+          background: #1c1c1c;
+          color: #fafafa;
+          border-color: #333;
         }
-
-        .username {
-          font-weight: 700;
-          font-size: 14px;
-        }
-
-        .channel {
-          font-size: 12px;
-          color: #8e8e8e;
-        }
-
-        .card-image-wrapper {
-          width: 100%;
-          aspect-ratio: 1;
-          overflow: hidden;
-          background: #f0f0f0;
-          position: relative;
-        }
-
-        .card-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          transition: opacity 0.3s ease;
-        }
-
-        .card-actions {
-          display: flex;
-          align-items: center;
-          padding: 10px 16px;
-          gap: 16px;
-        }
-
-        .action-btn {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-size: 26px;
-          padding: 0;
-          transition: transform 0.15s;
-          line-height: 1;
-        }
-
-        .action-btn:hover {
-          transform: scale(1.2);
-        }
-
-        .heart.liked {
-          color: #ed4956;
-        }
-
         .heart {
-          color: var(--ddd-theme-primary, #000);
+          color: #fafafa;
         }
-
-        .card-footer {
-          padding: 0 16px 16px;
-          font-size: 14px;
-          line-height: 1.6;
-        }
-
-        .photo-title {
-          font-weight: 700;
-          font-size: 15px;
-          margin-bottom: 4px;
-        }
-
         .photo-description {
-          color: #555;
-          font-size: 13px;
-        }
-
-        .photo-date {
-          font-size: 11px;
-          color: #aaa;
-          margin-top: 6px;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-
-        .user-since {
-          font-size: 11px;
           color: #aaa;
         }
-
-        .nav-controls {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-          padding: 16px;
-          max-width: 480px;
-          margin: 0 auto;
-        }
-
-        .nav-btn {
-          background: #0095f6;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          padding: 10px 24px;
-          font-size: 15px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-
-        .nav-btn:hover {
-          background: #007acc;
-        }
-
-        .nav-btn:disabled {
-          background: #b2dffc;
-          cursor: not-allowed;
-        }
-
-        .slide-counter {
-          font-size: 14px;
-          font-weight: 600;
-          color: #8e8e8e;
-          min-width: 60px;
-          text-align: center;
-        }
-
-        .dots {
-          display: flex;
-          justify-content: center;
-          gap: 6px;
-          padding: 8px 0 0;
-        }
-
-        .dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: #dbdbdb;
-          cursor: pointer;
-          transition: background 0.2s;
-          border: none;
-          padding: 0;
-        }
-
-        .dot.active {
-          background: #0095f6;
-        }
-
-        .loading {
-          text-align: center;
-          padding: 60px;
-          font-size: 16px;
-          color: #999;
-        }
-
-        @media (max-width: 520px) {
-          .card {
-            max-width: 100%;
-            border-radius: 0;
-            border-left: none;
-            border-right: none;
-          }
-        }
-
-        @media (prefers-color-scheme: dark) {
-          :host {
-            background: #121212;
-          }
-          .card {
-            background: #1c1c1c;
-            color: #fafafa;
-            border-color: #333;
-          }
-          .photo-description {
-            color: #aaa;
-          }
-          .gallery-header {
-            border-color: #333;
-            color: #fafafa;
-          }
-        }
-      `,
-    ];
+      }
+    `;
   }
 
   render() {
@@ -400,18 +394,14 @@ export class InstagramProject extends DDDSuper(LitElement) {
 
       <div class="nav-controls">
         <button class="nav-btn" @click="${this.prev}" ?disabled="${this.activeIndex === 0}">
-          ← Prev
+          Prev
         </button>
         <span class="slide-counter">${this.activeIndex + 1} / ${this.photos.length}</span>
         <button class="nav-btn" @click="${this.next}" ?disabled="${this.activeIndex === this.photos.length - 1}">
-          Next →
+          Next
         </button>
       </div>
     `;
-  }
-
-  static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href;
   }
 }
 
